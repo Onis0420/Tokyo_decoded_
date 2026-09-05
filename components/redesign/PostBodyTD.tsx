@@ -57,6 +57,11 @@ export default function PostBodyTD({
   const sections = SECTIONS.map((key) => ({ key, h: heading(key), text: post.body[key][locale] }));
   const toc = sections.filter((s) => s.h);
   const tags = locale === "ja" ? post.tags_ja : post.tags_en;
+  const sources = post.sources ?? [];
+  const faq = post.faq ?? [];
+  // 読了時間：日本語は約500字/分、英語は約200語/分で概算（最低1分）
+  const bodyText = [post.body.hook, ...SECTIONS.map((k) => post.body[k])].map((b) => b[locale]).join(" ");
+  const readMinutes = Math.max(1, Math.round(locale === "ja" ? bodyText.length / 500 : bodyText.split(/\s+/).length / 200));
 
   const bodyImgAfter: Record<number, { src?: string; alt?: string }> = {
     1: { src: post.bodyImage1, alt: locale === "ja" ? post.bodyImage1Alt_ja : post.bodyImage1Alt_en },
@@ -83,9 +88,11 @@ export default function PostBodyTD({
           <div className="td-abyline">
             <b>{locale === "ja" ? "文 — Tokyo Decoded 編集部" : "By the Tokyo Decoded editorial team"}</b>
             <span className="td-dot">·</span>{fmtDot(post.publishedAt)} {locale === "ja" ? "公開" : "published"}
-            <span className="td-dot">·</span>{fmtDot(post.publishedAt)} {locale === "ja" ? "更新" : "updated"}
-            <span className="td-dot">·</span>{locale === "ja" ? "読了 約6分" : "6 min read"}
-            <span className="td-dot">·</span>{locale === "ja" ? `出典 ${post.affiliateLinks.length + 3}件` : `${post.affiliateLinks.length + 3} sources`}
+            <span className="td-dot">·</span>{fmtDot(post.updatedAt ?? post.publishedAt)} {locale === "ja" ? "更新" : "updated"}
+            <span className="td-dot">·</span>{locale === "ja" ? `読了 約${readMinutes}分` : `${readMinutes} min read`}
+            {sources.length > 0 ? (
+              <><span className="td-dot">·</span><a href="#sources" className="td-srclink">{locale === "ja" ? `出典 ${sources.length}件` : `${sources.length} sources`}</a></>
+            ) : null}
           </div>
         </div>
 
@@ -105,6 +112,18 @@ export default function PostBodyTD({
                 ) : null}
               </React.Fragment>
             ))}
+
+            {faq.length > 0 ? (
+              <section className="td-faq" id="faq">
+                <h2>{locale === "ja" ? "よくある質問" : "FAQ"}</h2>
+                {faq.map((item, i) => (
+                  <div className="td-faqitem" key={i}>
+                    <h3>{item.q[locale]}</h3>
+                    <p>{renderInline(item.a[locale])}</p>
+                  </div>
+                ))}
+              </section>
+            ) : null}
 
             {post.affiliateLinks.length > 0 ? (
               <aside className="td-affbox">
@@ -141,6 +160,22 @@ export default function PostBodyTD({
               </p>
             </div>
 
+            {sources.length > 0 ? (
+              <section className="td-sources" id="sources">
+                <h2>{locale === "ja" ? "出典・参考資料" : "Sources"}</h2>
+                <ol>
+                  {sources.map((src) => (
+                    <li key={src.url}>
+                      <a href={src.url} target="_blank" rel="noopener noreferrer">
+                        {locale === "ja" ? src.label_ja : src.label_en}
+                      </a>
+                      {src.publisher ? <span className="td-srcpub"> — {src.publisher}</span> : null}
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            ) : null}
+
             {tags.length > 0 ? (
               <div className="td-dtags">
                 {tags.map((t) => <Link key={t} className="td-dtag" href={`${base}/posts`}>#{t}</Link>)}
@@ -153,6 +188,8 @@ export default function PostBodyTD({
               <div className="td-tl">{locale === "ja" ? "目次 — Contents" : "Contents"}</div>
               <ol>
                 {sections.map((s, i) => (s.h ? <li key={s.key}><a href={`#s${i + 1}`}>{s.h}</a></li> : null))}
+                {faq.length > 0 ? <li><a href="#faq">{locale === "ja" ? "よくある質問" : "FAQ"}</a></li> : null}
+                {sources.length > 0 ? <li><a href="#sources">{locale === "ja" ? "出典・参考資料" : "Sources"}</a></li> : null}
               </ol>
             </nav>
           ) : null}

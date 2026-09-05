@@ -54,6 +54,25 @@ export type Post = {
   readonly affiliateLinks: readonly AffiliateLink[];
   readonly tags_ja: readonly string[];
   readonly tags_en: readonly string[];
+  // 最終更新日（リライト時に更新）。未設定なら publishedAt を使う
+  readonly updatedAt?: string;
+  // 出典・参考資料。本文中で引用した統計・報道の一次ソース（外部リンク）
+  readonly sources?: readonly Source[];
+  // よくある質問（検索の質問型クエリに対応）
+  readonly faq?: readonly FaqItem[];
+};
+
+export type Source = {
+  readonly label_ja: string;
+  readonly label_en: string;
+  readonly url: string;
+  // 発行元（例: 厚生労働省 / NerdWallet）。省略可
+  readonly publisher?: string;
+};
+
+export type FaqItem = {
+  readonly q: LocalizedString;
+  readonly a: LocalizedString;
 };
 
 export type PostBody = {

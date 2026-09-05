@@ -125,8 +125,8 @@ export const aboutContent = {
       en: "Follow Us on Social Media",
     },
     body: {
-      ja: "YouTube・Instagram・X・TikTok の日本語アカウントと英語アカウント、計8つで発信しています。プラットフォームごとに最適なかたちでコンテンツをお届けしています。",
-      en: "We publish across eight accounts — YouTube, Instagram, X, and TikTok in both Japanese and English. Each platform gets content shaped for how people actually use it.",
+      ja: "Instagram と X で、日本語アカウントと英語アカウントの計4つを運用しています。記事の要点をカードや短い動画にして、プラットフォームごとに最適なかたちでお届けしています。",
+      en: "We run four accounts — Instagram and X, each in Japanese and English. Article highlights become cards and short videos, shaped for how each platform is actually used.",
     },
   },
 

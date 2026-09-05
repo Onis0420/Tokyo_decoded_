@@ -21,22 +21,6 @@ export const siteContent = {
 
   social: [
     {
-      id: "youtube-ja",
-      platform: "youtube",
-      locale: "ja",
-      handle: "@TokyoDecodedJP",
-      url: "https://www.youtube.com/@TokyoDecodedJP",
-      label: "YouTube（日本語）",
-    },
-    {
-      id: "youtube-en",
-      platform: "youtube",
-      locale: "en",
-      handle: "@TokyoDecoded",
-      url: "https://www.youtube.com/@TokyoDecoded",
-      label: "YouTube (English)",
-    },
-    {
       id: "instagram-ja",
       platform: "instagram",
       locale: "ja",
@@ -48,8 +32,8 @@ export const siteContent = {
       id: "instagram-en",
       platform: "instagram",
       locale: "en",
-      handle: "@tokyo_decoded_",
-      url: "https://www.instagram.com/tokyo_decoded_/",
+      handle: "@tokyo_decoded.team",
+      url: "https://www.instagram.com/tokyo_decoded.team/",
       label: "Instagram (English)",
     },
     {
@@ -67,22 +51,6 @@ export const siteContent = {
       handle: "@Tokyo_decoded_",
       url: "https://x.com/Tokyo_decoded_",
       label: "X (English)",
-    },
-    {
-      id: "tiktok-ja",
-      platform: "tiktok",
-      locale: "ja",
-      handle: "@tokyo_decoded_jp",
-      url: "https://www.tiktok.com/@tokyo_decoded_jp",
-      label: "TikTok（日本語）",
-    },
-    {
-      id: "tiktok-en",
-      platform: "tiktok",
-      locale: "en",
-      handle: "@tokyo_decoded_",
-      url: "https://www.tiktok.com/@tokyo_decoded_",
-      label: "TikTok (English)",
     },
   ] as const satisfies readonly SocialAccount[],
 

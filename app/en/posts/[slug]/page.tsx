@@ -74,7 +74,7 @@ export default async function EnPostPage({ params }: Props) {
     description: post.excerpt_en,
     image: absoluteUrl(post.thumbnail),
     datePublished: post.publishedAt,
-    dateModified: post.publishedAt,
+    dateModified: post.updatedAt ?? post.publishedAt,
     inLanguage: "en",
   };
 

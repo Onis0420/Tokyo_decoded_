@@ -211,14 +211,10 @@ export const structuredDataTemplates = {
       contactType: "editorial",
     },
     sameAs: [
-      "https://www.youtube.com/@TokyoDecodedJP",
-      "https://www.youtube.com/@TokyoDecoded",
       "https://www.instagram.com/tokyo_decoded_jp/",
-      "https://www.instagram.com/tokyo_decoded_/",
+      "https://www.instagram.com/tokyo_decoded.team/",
       "https://x.com/TokyoDecoded_jp",
       "https://x.com/Tokyo_decoded_",
-      "https://www.tiktok.com/@tokyo_decoded_jp",
-      "https://www.tiktok.com/@tokyo_decoded_",
     ],
   } satisfies StructuredDataOrganization,
 

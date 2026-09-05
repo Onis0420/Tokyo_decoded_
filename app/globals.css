@@ -363,6 +363,17 @@ html[data-theme="dark"] .td-logo :is(.st0,[fill="#0f1115"]){fill:var(--td-fg);}
 .td-trust{background:var(--td-chip);padding:22px 24px;margin:36px 0;}
 .td-trust h3{margin:0 0 8px;font-size:16px;font-weight:900;}
 .td-trust p{margin:0;font-size:13.5px;line-height:1.85;color:var(--td-leadp);}.td-trust a{color:var(--td-red);}
+.td-faq{margin:40px 0 8px;}
+.td-faq h2{font-size:22px;font-weight:900;margin:0 0 14px;}
+.td-faqitem{border-top:1px solid var(--td-lineF);padding:16px 0 6px;}
+.td-faqitem h3{font-size:16.5px;font-weight:800;margin:0 0 8px;line-height:1.6;}
+.td-faqitem p{margin:0 0 8px;font-size:15px;line-height:1.95;}
+.td-sources{margin:36px 0 0;padding:22px 24px;border:2px solid var(--td-lineS);}
+.td-sources h2{font-size:17px;font-weight:900;margin:0 0 10px;}
+.td-sources ol{margin:0;padding-left:1.4em;font-size:13.5px;line-height:1.9;color:var(--td-leadp);}
+.td-sources a{color:var(--td-red);text-decoration:underline;text-underline-offset:2px;}
+.td-srcpub{color:var(--td-muted);}
+.td-abyline .td-srclink{color:var(--td-red);text-decoration:none;}
 .td-dtags{display:flex;gap:9px;flex-wrap:wrap;margin:30px 0 0;}
 .td-dtag{font-size:13px;font-weight:700;color:var(--td-fg);background:var(--td-chip);padding:7px 13px;}
 .td-dtag:hover{background:var(--td-red);color:#fff;}
