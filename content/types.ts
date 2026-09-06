@@ -129,7 +129,10 @@ export type Tool = {
   readonly preview: string;
   readonly previewAlt_ja: string;
   readonly previewAlt_en: string;
-  readonly downloadType: "email-gate";
+  /** 登録不要の直リンク（Notion 公開ページ）。2026-09-07 にメールゲートを廃止 */
+  readonly notionUrl: string;
+  /** このテンプレートを「実践」節の後に案内する記事 slug */
+  readonly relatedSlugs: readonly string[];
 };
 
 export type RecommendedCategory = {

@@ -9,6 +9,7 @@ import { getAuthor } from "@/content/authors";
 import { getPrevNextPosts } from "@/lib/posts";
 import { splitParagraphs } from "@/lib/text";
 import { defaultMetadata } from "@/content/seo";
+import { toolsForPost } from "@/content/tools";
 
 const STEP_MARKER = /[①②③④⑤⑥⑦⑧⑨⑩]/;
 const INLINE_LINK = /\[([^\]]+)\]\((\/[^\s)]+|https:\/\/[^\s)]+)\)/g;
@@ -81,6 +82,7 @@ export default function PostBodyTD({
   const { prev, next } = getPrevNextPosts(post.slug);
   const pageUrl = `${defaultMetadata.siteUrl}${base}/posts/${post.slug}`;
   const thumbAlt = locale === "ja" ? post.thumbnailAlt_ja : post.thumbnailAlt_en;
+  const templates = toolsForPost(post.slug);
 
   const bodyImgAfter: Record<number, { src?: string; alt?: string }> = {
     1: { src: post.bodyImage1, alt: locale === "ja" ? post.bodyImage1Alt_ja : post.bodyImage1Alt_en },
@@ -134,6 +136,22 @@ export default function PostBodyTD({
               <React.Fragment key={s.key}>
                 {s.h ? <h2 id={`s${i + 1}`}>{s.h}</h2> : null}
                 <SectionContent content={s.text} locale={locale} />
+                {s.key === "practice" && templates.length > 0 ? (
+                  <aside className="td-template">
+                    {templates.map((t) => (
+                      <div className="td-templatein" key={t.slug}>
+                        <Image src={t.preview} alt="" width={120} height={82} className="td-templateimg" />
+                        <div className="td-templatebody">
+                          <div className="td-templatel">{locale === "ja" ? "この記事で使えるテンプレート" : "Template for this article"}</div>
+                          <div className="td-templaten">{t.name[locale]}</div>
+                          <a href={t.notionUrl} target="_blank" rel="noopener noreferrer" className="td-templatelink">
+                            {locale === "ja" ? "Notionで開く（登録不要） →" : "Open in Notion (no sign-up) →"}
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+                  </aside>
+                ) : null}
                 {bodyImgAfter[i]?.src ? (
                   <figure className="td-bodyfig">
                     <Image src={bodyImgAfter[i]!.src!} alt={bodyImgAfter[i]!.alt ?? ""} width={1536} height={1024}

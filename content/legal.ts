@@ -27,8 +27,8 @@ export const legalContent = {
           en: "Information We Collect",
         },
         body: {
-          ja: "当サイトでは、以下の情報を収集する場合があります。①メールアドレス（Editor's Toolsのダウンロード登録・お問い合わせフォームの送信時）、②IPアドレスおよびアクセスログ（Google Analytics 4 によるアクセス解析）、③Cookieに関する同意情報。氏名・電話番号・住所などの情報は、お問い合わせフォームで入力された場合のみ収集します。",
-          en: "We collect the following information: (1) email address, when you register to download Editor's Tools or submit a contact form; (2) IP address and access logs, through Google Analytics 4; (3) cookie consent status. Name, phone number, and address are only collected if you enter them in the contact form.",
+          ja: "当サイトでは、以下の情報を収集する場合があります。①メールアドレス（お問い合わせフォームの送信時）、②IPアドレスおよびアクセスログ（Google Analytics 4 によるアクセス解析）、③Cookieに関する同意情報。氏名・電話番号・住所などの情報は、お問い合わせフォームで入力された場合のみ収集します。",
+          en: "We collect the following information: (1) email address, when you submit a contact form; (2) IP address and access logs, through Google Analytics 4; (3) cookie consent status. Name, phone number, and address are only collected if you enter them in the contact form.",
         },
       },
       usage: {
@@ -37,8 +37,8 @@ export const legalContent = {
           en: "How We Use Your Information",
         },
         body: {
-          ja: "収集した情報は以下の目的にのみ使用します。①Editor's Toolsのダウンロードリンク送付、②お問い合わせへの返信、③サイト改善のためのアクセス解析。メールアドレスを第三者に販売・提供することはありません。将来的にメールマガジンを配信する場合は、改めて明示的な同意を取得します。",
-          en: "We use collected information only for: (1) sending Editor's Tools download links; (2) responding to contact form inquiries; (3) analyzing site usage for improvement. We do not sell or share your email address with third parties. If we introduce a newsletter in the future, we will request explicit consent separately.",
+          ja: "収集した情報は以下の目的にのみ使用します。①お問い合わせへの返信、②サイト改善のためのアクセス解析。メールアドレスを第三者に販売・提供することはありません。将来的にメールマガジンを配信する場合は、改めて明示的な同意を取得します。",
+          en: "We use collected information only for: (1) responding to contact form inquiries; (2) analyzing site usage for improvement. We do not sell or share your email address with third parties. If we introduce a newsletter in the future, we will request explicit consent separately.",
         },
       },
       cookies: {
@@ -213,12 +213,12 @@ export const legalContent = {
       },
       tools: {
         heading: {
-          ja: "Editor's Tools について",
-          en: "About Editor's Tools",
+          ja: "編集部のテンプレートについて",
+          en: "About Our Templates",
         },
         body: {
-          ja: "サイトで無償配布している Editor's Tools（Digital Kakebo 等）は、当編集部が実際の編集・リサーチ業務で使用しているテンプレートを一般公開したものです。私たち自身が日々使っている道具を公開することが、編集部の実務と誠実さの証明になると考えています。",
-          en: "The Editor's Tools we distribute for free (such as the Digital Kakebo) are the actual templates our team uses in day-to-day editorial and research work. We believe that sharing the tools we genuinely rely on is the best proof of how we work.",
+          ja: "編集部ページと一部の記事で案内している家計簿テンプレート（Digital Kakebo）は、当編集部が実際に使っているものを登録不要で公開しています。メールアドレスの登録を求めることはありません。",
+          en: "The budgeting template (Digital Kakebo) offered on our About page and in some articles is one our team actually uses, shared without any sign-up. We never ask for your email address to access it.",
         },
       },
       corrections: {

@@ -19,9 +19,9 @@ export const homeContent = {
         href: "/posts",
       },
       secondary: {
-        label_ja: "無料ツールを受け取る",
-        label_en: "Get Free Tools",
-        href: "/tools",
+        label_ja: "編集部について",
+        label_en: "About the Team",
+        href: "/about",
       },
     },
   },

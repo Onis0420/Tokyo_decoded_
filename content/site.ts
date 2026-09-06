@@ -59,7 +59,6 @@ export const siteContent = {
     { href: "/", label_ja: "ホーム", label_en: "Home" },
     { href: "/about", label_ja: "編集部について", label_en: "About" },
     { href: "/posts", label_ja: "投稿", label_en: "Posts" },
-    { href: "/tools", label_ja: "Editor's Tools", label_en: "Editor's Tools" },
     { href: "/contact", label_ja: "お問い合わせ", label_en: "Contact" },
   ] as const satisfies readonly NavItem[],
 

@@ -5,6 +5,7 @@ import { siteContent } from "@/content/site";
 import { authors } from "@/content/authors";
 import type { Locale } from "@/content/types";
 import { Button } from "@/components/ui/Button";
+import { digitalKakeibo } from "@/content/tools";
 
 type AboutPageBodyProps = {
   locale?: Locale;
@@ -152,6 +153,39 @@ export function AboutPageBody({ locale = "ja" }: AboutPageBodyProps) {
               );
             })}
           </ul>
+        </div>
+      </section>
+
+      <section className="bg-paper border-t border-ink/10" id="templates">
+        <div className="mx-auto max-w-[1200px] px-[5vw] py-[clamp(40px,5vw,56px)] lg:px-10">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
+            <Image
+              src={digitalKakeibo.preview}
+              alt={locale === "ja" ? digitalKakeibo.previewAlt_ja : digitalKakeibo.previewAlt_en}
+              width={160}
+              height={110}
+              className="h-auto w-40 flex-none border border-ink/15"
+            />
+            <div className="min-w-0 flex-1">
+              <p className="font-sans text-xs font-bold uppercase tracking-[0.16em] text-ink/60">
+                {aboutContent.templates.heading[locale]}
+              </p>
+              <p className="mt-2 font-jp text-lg font-black leading-snug text-ink">
+                {digitalKakeibo.name[locale]}
+              </p>
+              <p className="mt-2 max-w-2xl font-jp text-sm leading-relaxed text-ink/80">
+                {aboutContent.templates.body[locale]}
+              </p>
+            </div>
+            <a
+              href={digitalKakeibo.notionUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex flex-none items-center justify-center border border-ink px-5 py-3 font-sans text-sm font-bold text-ink transition-colors duration-[150ms] hover:bg-ink hover:text-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent motion-reduce:transition-none"
+            >
+              {aboutContent.templates.linkLabel[locale]} →
+            </a>
+          </div>
         </div>
       </section>
 

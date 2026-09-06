@@ -170,7 +170,6 @@ export const robotsPolicy = {
     "/about": 0.8,
     "/posts": 0.9,
     "/posts/[slug]": 0.8,
-    "/tools": 0.9,
     "/contact": 0.6,
     "/privacy": 0.3,
     "/disclosure": 0.3,

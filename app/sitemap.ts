@@ -22,9 +22,8 @@ type ChangeFrequency = NonNullable<
  */
 const STATIC_PAGE_LAST_MODIFIED: Record<string, string> = {
   "": "2026-08-01",
-  "/about": "2026-09-06",
+  "/about": "2026-09-07",
   "/posts": "2026-08-01",
-  "/tools": "2026-07-21",
   "/contact": "2026-06-11",
   "/privacy": "2026-06-07",
   "/disclosure": "2026-06-07",
@@ -40,7 +39,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "", key: "/", freq: "weekly" },
     { path: "/about", key: "/about", freq: "monthly" },
     { path: "/posts", key: "/posts", freq: "daily" },
-    { path: "/tools", key: "/tools", freq: "monthly" },
     { path: "/contact", key: "/contact", freq: "yearly" },
     { path: "/privacy", key: "/privacy", freq: "yearly" },
     { path: "/disclosure", key: "/disclosure", freq: "yearly" },

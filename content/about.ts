@@ -134,6 +134,21 @@ export const aboutContent = {
     },
   },
 
+  templates: {
+    heading: {
+      ja: "編集部のテンプレート",
+      en: "A template from the team",
+    },
+    body: {
+      ja: "私たちが実際に使っている家計簿テンプレートを、登録不要で公開しています。Notion で複製してそのまま使えます。",
+      en: "The budgeting template our team actually uses, shared with no sign-up. Duplicate it in Notion and start using it.",
+    },
+    linkLabel: {
+      ja: "Notionで開く（登録不要）",
+      en: "Open in Notion (no sign-up)",
+    },
+  },
+
   socialIntro: {
     heading: {
       ja: "SNSでも発信しています",

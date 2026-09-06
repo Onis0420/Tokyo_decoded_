@@ -1,5 +1,6 @@
 "use client";
-// components/redesign/FooterTD.tsx — REDESIGN フッター（Editor's Toolsバンド＋主要メニュー/補足ページを分離・ロゴ入り）
+// components/redesign/FooterTD.tsx — REDESIGN フッター（黒背景・主要メニュー/補足ページ・ロゴ入り）
+// 2026-09-07: Editor's Tools の黒帯とメニューを撤去し、フッター全体を黒背景に
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -12,7 +13,7 @@ export default function FooterTD() {
   const mainMenu = [
     { href: `${b}/posts`, label: ja ? "記事一覧" : "Articles" },
     { href: `${b}/about`, label: ja ? "編集部について" : "About" },
-    { href: `${b}/tools`, label: "Editor's Tools" },
+    { href: `${b}/authors/mina-kiryu`, label: ja ? "編集スタッフ" : "Editors" },
     { href: `${b}/contact`, label: ja ? "お問い合わせ" : "Contact" },
   ];
   const legal = [
@@ -22,19 +23,7 @@ export default function FooterTD() {
   ];
 
   return (
-    <footer className="td-scope" role="contentinfo">
-      <div className="td-band">
-        <div className="td-wrap">
-          <div className="td-bandin">
-            <div>
-              <h3>{ja ? "Editor's Tools — 無料で受け取る" : "Editor's Tools — Free"}</h3>
-              <p>{ja ? "編集部が実際に使う家計テンプレ・リサーチブリーフを配布中。" : "Free templates and research briefs from the editorial team."}</p>
-            </div>
-            <Link className="td-btn" href={`${b}/tools`}>{ja ? "ツールを受け取る" : "Get the tools"}</Link>
-          </div>
-        </div>
-      </div>
-
+    <footer className="td-scope td-footer" role="contentinfo">
       <div className="td-wrap">
         <div className="td-fmain">
           <div className="td-fbrand">
