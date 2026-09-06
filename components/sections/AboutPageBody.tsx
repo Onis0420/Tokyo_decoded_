@@ -163,7 +163,7 @@ export function AboutPageBody({ locale = "ja" }: AboutPageBodyProps) {
           <p className="mt-6 max-w-3xl font-jp text-lg leading-loose text-ink">
             {aboutContent.socialIntro.body[locale]}
           </p>
-          <ul role="list" className="mt-10 grid gap-px bg-ink sm:grid-cols-2 lg:grid-cols-4">
+          <ul role="list" className="mt-10 grid gap-px bg-ink sm:grid-cols-2">
             {localizedSocial.map((account) => (
               <li key={account.id} className="bg-paper">
                 <a

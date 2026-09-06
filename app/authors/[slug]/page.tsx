@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const author = getAuthor(slug);
   if (!author) return {};
-  const title = `${author.name_ja}（${author.role_ja}） | Tokyo Decoded 編集部`;
+  const title = `${author.name_ja}——${author.role_ja}`;
   const description = `${author.origin_ja}出身。${author.bio_ja}`;
   return {
     title,

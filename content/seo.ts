@@ -16,7 +16,7 @@ import type {
 
 export const defaultMetadata = {
   // Next.js Metadata API の title.template に使用
-  titleTemplate: "%s | Tokyo Decoded",
+  titleTemplate: "%s",
   defaultTitle: "Tokyo Decoded — 東京発バイリンガル編集部",
   defaultDescription:
     "東京発バイリンガル編集部。海外トレンドをデータで読み解き、日本のミレニアル世代に届けます。お金・暮らし・美容の最新情報を日本語と英語で発信。",
@@ -48,8 +48,8 @@ export const pageMetadata = {
   },
 
   about: {
-    title_ja: "編集部について | Tokyo Decoded",
-    title_en: "About Us | Tokyo Decoded",
+    title_ja: "編集部について",
+    title_en: "About Us",
     description_ja:
       "Tokyo Decoded編集部のミッション・戦略・3本柱を紹介。海外トレンドと日本の知恵を翻訳するバイリンガルリサーチチームです。",
     description_en:
@@ -59,8 +59,8 @@ export const pageMetadata = {
   },
 
   posts: {
-    title_ja: "投稿一覧 | Tokyo Decoded",
-    title_en: "Posts | Tokyo Decoded",
+    title_ja: "投稿一覧",
+    title_en: "Posts",
     description_ja:
       "Tokyo Decoded編集部の全投稿一覧。お金・AI・暮らし・美容のカテゴリ別に、世界のトレンドをデータで解説しています。",
     description_en:
@@ -71,9 +71,9 @@ export const pageMetadata = {
 
   "posts/001-loud-budgeting": {
     title_ja:
-      "「お金ない」が恥ずかしくない時代へ——米国発「Loud Budgeting」とは | Tokyo Decoded",
+      "「お金ない」が恥ずかしくない時代へ——米国発「Loud Budgeting」とは",
     title_en:
-      "Loud Budgeting: The US Trend That's Changing How We Talk About Money | Tokyo Decoded",
+      "Loud Budgeting: The US Trend That's Changing How We Talk About Money",
     description_ja:
       "TikTokで1.4億回再生を突破した「Loud Budgeting」。節約を堂々と宣言する新しいお金の価値観と、日本版の実践方法をデータで解説します。",
     description_en:
@@ -84,9 +84,9 @@ export const pageMetadata = {
 
   "posts/002-soft-saving": {
     title_ja:
-      "「将来のために我慢」はもう古い——Z世代73%が支持する「Soft Saving」とは | Tokyo Decoded",
+      "「将来のために我慢」はもう古い——Z世代73%が支持する「Soft Saving」とは",
     title_en:
-      "Soft Saving: Why 73% of Gen Z Prioritize Today Over Retirement | Tokyo Decoded",
+      "Soft Saving: Why 73% of Gen Z Prioritize Today Over Retirement",
     description_ja:
       "Intuit調査でZ世代の73%が「老後より今の生活の質を優先」と回答。「Soft Saving」という新しい節約観と日本の積立・もったいない文化との接点を解説します。",
     description_en:
@@ -96,8 +96,8 @@ export const pageMetadata = {
   },
 
   tools: {
-    title_ja: "Editor's Tools — 無料テンプレート配布 | Tokyo Decoded",
-    title_en: "Editor's Tools — Free Templates | Tokyo Decoded",
+    title_ja: "Editor's Tools — 無料テンプレート配布",
+    title_en: "Editor's Tools — Free Templates",
     description_ja:
       "Tokyo Decoded編集部が実際に使うリサーチ・家計管理フレームワークを無料配布。Digital Kakeibo（AI家計簿テンプレート）を今すぐダウンロード。",
     description_en:
@@ -107,8 +107,8 @@ export const pageMetadata = {
   },
 
   privacy: {
-    title_ja: "プライバシーポリシー | Tokyo Decoded",
-    title_en: "Privacy Policy | Tokyo Decoded",
+    title_ja: "プライバシーポリシー",
+    title_en: "Privacy Policy",
     description_ja:
       "Tokyo Decoded のプライバシーポリシー。個人情報の取り扱い・Cookie・メールアドレスの利用範囲を説明しています。",
     description_en:
@@ -118,8 +118,8 @@ export const pageMetadata = {
   },
 
   disclosure: {
-    title_ja: "アフィリエイト・広告開示 | Tokyo Decoded",
-    title_en: "Affiliate & Advertising Disclosure | Tokyo Decoded",
+    title_ja: "アフィリエイト・広告開示",
+    title_en: "Affiliate & Advertising Disclosure",
     description_ja:
       "Tokyo Decoded のアフィリエイト開示。景品表示法（ステマ規制）対応・参加ASP一覧・PR表記ルールを明示しています。",
     description_en:
@@ -129,8 +129,8 @@ export const pageMetadata = {
   },
 
   editorialPolicy: {
-    title_ja: "編集ポリシー | Tokyo Decoded",
-    title_en: "Editorial Policy | Tokyo Decoded",
+    title_ja: "編集ポリシー",
+    title_en: "Editorial Policy",
     description_ja:
       "Tokyo Decoded の編集ポリシー。出典と事実確認の基準・AIの活用と編集責任・紹介する商品の選定基準を明示しています。",
     description_en:
@@ -140,8 +140,8 @@ export const pageMetadata = {
   },
 
   contact: {
-    title_ja: "お問い合わせ | Tokyo Decoded",
-    title_en: "Contact | Tokyo Decoded",
+    title_ja: "お問い合わせ",
+    title_en: "Contact",
     description_ja:
       "Tokyo Decoded編集部へのお問い合わせ。メディア取材・PR案件・コラボ相談など、お気軽にご連絡ください。",
     description_en:
