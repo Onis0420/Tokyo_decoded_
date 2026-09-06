@@ -10,7 +10,8 @@ const schema = z.object({
   email: z.string().trim().email().max(254),
   subject: z.string().trim().min(1).max(200),
   message: z.string().trim().min(1).max(5000),
-  recaptchaToken: z.string().min(1),
+  // reCAPTCHA は未導入（クライアントは空文字を送る）。鍵が設定されたときだけ検証する
+  recaptchaToken: z.string().optional().default(""),
 });
 
 function json<T>(body: ApiResult<T>, status: number, headers?: HeadersInit) {
@@ -40,9 +41,13 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const verified = await verifyRecaptcha(parsed.data.recaptchaToken);
-  if (!verified) {
-    return json({ success: false, error: "reCAPTCHA verification failed." }, 403);
+  // RECAPTCHA_SECRET_KEY が設定されている環境だけ検証する。
+  // 未設定のまま必須にしていたため、公開以来フォームが常に 400/403 で弾かれていた（2026-09-07 修正）。
+  if (process.env.RECAPTCHA_SECRET_KEY) {
+    const verified = await verifyRecaptcha(parsed.data.recaptchaToken);
+    if (!verified) {
+      return json({ success: false, error: "reCAPTCHA verification failed." }, 403);
+    }
   }
 
   try {
