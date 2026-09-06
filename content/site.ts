@@ -1,6 +1,7 @@
 // content/site.ts
 // Tokyo Decoded LP — サイト全体共通設定
 // C-5 管理ファイル。Codex は読み取り専用。
+// 2026-09-07: リポジトリは Onis0420/Tokyo_decoded_、Vercel は team Onis（onis2）でホスト
 
 import type { NavItem, SocialAccount } from "./types";
 
