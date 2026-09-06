@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { posts } from "@/content/posts";
+import { authors } from "@/content/authors";
 import { defaultMetadata, robotsPolicy } from "@/content/seo";
 
 type SitemapPriorityKey = keyof typeof robotsPolicy.sitemapPriorities;
@@ -21,7 +22,7 @@ type ChangeFrequency = NonNullable<
  */
 const STATIC_PAGE_LAST_MODIFIED: Record<string, string> = {
   "": "2026-08-01",
-  "/about": "2026-06-07",
+  "/about": "2026-09-06",
   "/posts": "2026-08-01",
   "/tools": "2026-07-21",
   "/contact": "2026-06-11",
@@ -87,5 +88,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]);
 
-  return [...staticPages, ...postPages];
+  const authorPages: MetadataRoute.Sitemap = authors.flatMap((a) => {
+    const latest = posts
+      .filter((p) => (p as { author?: string }).author === a.slug)
+      .map((p) => new Date(p.updatedAt ?? p.publishedAt).getTime())
+      .reduce((x, y) => Math.max(x, y), 0);
+    const lastModified = latest ? new Date(latest) : new Date(STATIC_PAGE_LAST_MODIFIED["/about"]);
+    return [
+      { url: `${base}/authors/${a.slug}`, lastModified, changeFrequency: "monthly" as const, priority: 0.5 },
+      { url: `${base}/en/authors/${a.slug}`, lastModified, changeFrequency: "monthly" as const, priority: 0.5 },
+    ];
+  });
+
+  return [...staticPages, ...postPages, ...authorPages];
 }

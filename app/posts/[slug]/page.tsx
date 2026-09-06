@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import JsonLdArticle from "@/components/seo/JsonLdArticle";
 import PostBodyTD from "@/components/redesign/PostBodyTD";
 import { posts } from "@/content/posts";
+import { getAuthor } from "@/content/authors";
 import { defaultMetadata, pageMetadata, structuredDataTemplates } from "@/content/seo";
 import { absoluteUrl } from "@/lib/i18n";
 import { getPostBySlug, getRelatedPosts } from "@/lib/posts";
@@ -68,6 +69,7 @@ export default async function PostPage({ params }: Props) {
     notFound();
   }
 
+  const author = getAuthor(post.author);
   const articleData = {
     ...structuredDataTemplates.articleTemplate,
     headline: post.title_ja,
@@ -75,6 +77,17 @@ export default async function PostPage({ params }: Props) {
     image: absoluteUrl(post.thumbnail),
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
+    ...(author
+      ? {
+          author: {
+            "@type": "Person" as const,
+            name: author.name_ja,
+            url: absoluteUrl(`/authors/${author.slug}`),
+            jobTitle: author.role_ja,
+            worksFor: { "@type": "Organization" as const, name: "Tokyo Decoded" },
+          },
+        }
+      : {}),
     inLanguage: "ja",
   };
 

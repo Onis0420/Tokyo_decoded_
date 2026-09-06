@@ -60,6 +60,26 @@ export type Post = {
   readonly sources?: readonly Source[];
   // よくある質問（検索の質問型クエリに対応）
   readonly faq?: readonly FaqItem[];
+  // 著者（content/authors.ts の slug）。未設定なら編集部名義
+  readonly author?: string;
+};
+
+export type Author = {
+  readonly slug: string;
+  readonly name_ja: string;
+  readonly name_en: string;
+  readonly initials: string;
+  // イラストから切り出したアバター画像（public 配下のパス）
+  readonly image: string;
+  readonly role_ja: string;
+  readonly role_en: string;
+  readonly origin_ja: string;
+  readonly origin_en: string;
+  readonly categories: readonly string[];
+  readonly focus_ja: readonly string[];
+  readonly focus_en: readonly string[];
+  readonly bio_ja: string;
+  readonly bio_en: string;
 };
 
 export type Source = {
@@ -171,9 +191,11 @@ export type StructuredDataArticle = {
   readonly datePublished: string;
   readonly dateModified: string;
   readonly author: {
-    readonly "@type": "Organization";
+    readonly "@type": "Organization" | "Person";
     readonly name: string;
     readonly url: string;
+    readonly jobTitle?: string;
+    readonly worksFor?: { readonly "@type": "Organization"; readonly name: string };
   };
   readonly publisher: {
     readonly "@type": "Organization";

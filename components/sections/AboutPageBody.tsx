@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { aboutContent } from "@/content/about";
 import { siteContent } from "@/content/site";
+import { authors } from "@/content/authors";
 import type { Locale } from "@/content/types";
 import { Button } from "@/components/ui/Button";
 
@@ -109,6 +110,47 @@ export function AboutPageBody({ locale = "ja" }: AboutPageBodyProps) {
                 </p>
               </li>
             ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="bg-cream" id="team">
+        <div className="mx-auto max-w-[1200px] px-[5vw] py-[clamp(64px,9vw,104px)] lg:px-10">
+          <h2 className="font-display text-[clamp(2.1rem,3vw,3.2rem)] font-bold leading-tight text-ink">
+            {aboutContent.team.heading[locale]}
+          </h2>
+          <p className="mt-6 max-w-4xl font-jp text-lg leading-loose text-ink">
+            {aboutContent.team.body[locale]}
+          </p>
+          <ul role="list" className="mt-10 grid gap-px bg-ink sm:grid-cols-2 lg:grid-cols-5">
+            {authors.map((a) => {
+              const href = locale === "ja" ? `/authors/${a.slug}` : `/en/authors/${a.slug}`;
+              return (
+                <li key={a.slug} className="bg-paper">
+                  <Link href={href} className="block h-full p-6 transition-colors duration-[150ms] hover:bg-cream motion-reduce:transition-none">
+                    <Image
+                      src={a.image}
+                      alt={locale === "ja" ? a.name_ja : a.name_en}
+                      width={96}
+                      height={96}
+                      className="h-24 w-24 rounded-full border border-ink/20 object-cover"
+                    />
+                    <p className="mt-5 font-jp text-lg font-black leading-tight text-ink">
+                      {locale === "ja" ? a.name_ja : a.name_en}
+                    </p>
+                    <p className="mt-1 font-sans text-xs font-bold text-accent">
+                      {locale === "ja" ? a.role_ja : a.role_en}
+                    </p>
+                    <p className="mt-1 font-sans text-xs text-ink/70">
+                      {locale === "ja" ? a.origin_ja : a.origin_en}
+                    </p>
+                    <p className="mt-4 font-jp text-sm leading-relaxed text-ink">
+                      {(locale === "ja" ? a.focus_ja : a.focus_en).slice(0, 3).join(" / ")}
+                    </p>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>

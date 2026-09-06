@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Locale, Post } from "@/content/types";
 import CardTD from "@/components/redesign/CardTD";
 import { catClass, catLabel, title, excerpt, fmtDot } from "@/lib/td";
+import { getAuthor } from "@/content/authors";
 
 const STEP_MARKER = /[①②③④⑤⑥⑦⑧⑨⑩]/;
 const INLINE_LINK = /\[([^\]]+)\]\((\/[^\s)]+|https:\/\/[^\s)]+)\)/g;
@@ -58,6 +59,10 @@ export default function PostBodyTD({
   const toc = sections.filter((s) => s.h);
   const tags = locale === "ja" ? post.tags_ja : post.tags_en;
   const sources = post.sources ?? [];
+  const author = getAuthor(post.author);
+  const authorName = author ? (locale === "ja" ? author.name_ja : author.name_en) : null;
+  const authorRole = author ? (locale === "ja" ? author.role_ja : author.role_en) : null;
+  const authorHref = author ? `${base}/authors/${author.slug}` : null;
   const faq = post.faq ?? [];
   // 読了時間：日本語は約500字/分、英語は約200語/分で概算（最低1分）
   const bodyText = [post.body.hook, ...SECTIONS.map((k) => post.body[k])].map((b) => b[locale]).join(" ");
@@ -86,7 +91,15 @@ export default function PostBodyTD({
           <h1>{title(post, locale)}</h1>
           <p className="td-dek">{excerpt(post, locale)}</p>
           <div className="td-abyline">
-            <b>{locale === "ja" ? "文 — Tokyo Decoded 編集部" : "By the Tokyo Decoded editorial team"}</b>
+            {author && authorHref ? (
+              <Link href={authorHref} className="td-byauthor">
+                <img src={author.image} alt="" width={26} height={26} className="td-byavatar" />
+                <b>{locale === "ja" ? `文 — ${authorName}` : `By ${authorName}`}</b>
+                <span className="td-byrole">{authorRole}</span>
+              </Link>
+            ) : (
+              <b>{locale === "ja" ? "文 — Tokyo Decoded 編集部" : "By the Tokyo Decoded editorial team"}</b>
+            )}
             <span className="td-dot">·</span>{fmtDot(post.publishedAt)} {locale === "ja" ? "公開" : "published"}
             <span className="td-dot">·</span>{fmtDot(post.updatedAt ?? post.publishedAt)} {locale === "ja" ? "更新" : "updated"}
             <span className="td-dot">·</span>{locale === "ja" ? `読了 約${readMinutes}分` : `${readMinutes} min read`}
@@ -153,8 +166,12 @@ export default function PostBodyTD({
               <h3>{locale === "ja" ? "この記事について" : "About this article"}</h3>
               <p>
                 {locale === "ja"
-                  ? "この記事は Tokyo Decoded 編集部が制作しました。出典の明記と事実確認、広告主が内容・評価に関与しない編集の独立を方針としています。詳しくは"
-                  : "This article was produced by the Tokyo Decoded editorial team. We cite sources, verify facts, and keep editorial independence from advertisers. See our "}
+                  ? (author
+                      ? `この記事は Tokyo Decoded 編集部の${authorName}（${authorRole}）が執筆し、編集部が出典の確認と事実確認を行いました。広告主が内容・評価に関与しない編集の独立を方針としています。詳しくは`
+                      : "この記事は Tokyo Decoded 編集部が制作しました。出典の明記と事実確認、広告主が内容・評価に関与しない編集の独立を方針としています。詳しくは")
+                  : (author
+                      ? `This article was written by ${authorName} (${authorRole}) of the Tokyo Decoded editorial team, with sources and facts checked by the team. We keep editorial independence from advertisers. See our `
+                      : "This article was produced by the Tokyo Decoded editorial team. We cite sources, verify facts, and keep editorial independence from advertisers. See our ")}
                 <Link href={`${base}/editorial-policy`}>{locale === "ja" ? "編集ポリシー" : "editorial policy"}</Link>
                 {locale === "ja" ? "をご覧ください。" : "."}
               </p>

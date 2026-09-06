@@ -42,3 +42,7 @@ export function getPrevNextPosts(slug: string): { prev: Post | null; next: Post 
     next: (sorted[index - 1] as Post | undefined) ?? null,
   };
 }
+
+export function getPostsByAuthor(authorSlug: string): readonly Post[] {
+  return listPosts().filter((p) => p.author === authorSlug);
+}

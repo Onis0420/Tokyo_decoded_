@@ -119,6 +119,21 @@ export const aboutContent = {
     },
   },
 
+  team: {
+    heading: {
+      ja: "編集スタッフ",
+      en: "The Editorial Team",
+    },
+    body: {
+      ja: "東京・ベルリン・メキシコシティ・ロサンゼルス・ソウル出身の5名が、それぞれの担当分野で記事を執筆しています。全員が「数字は一次資料まで辿る」「やっていない検証は書かない」という同じ編集ルールで書き、公開前に編集部で出典と事実を確認します。",
+      en: "Five editors from Tokyo, Berlin, Mexico City, Los Angeles and Seoul write within their own beats. Everyone follows the same rules — every figure traces to a primary source, and we never describe testing we did not do — and each piece is source-checked before it goes out.",
+    },
+    linkLabel: {
+      ja: "記事一覧へ",
+      en: "View articles",
+    },
+  },
+
   socialIntro: {
     heading: {
       ja: "SNSでも発信しています",
