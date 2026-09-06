@@ -16,7 +16,7 @@ import type {
 
 export const defaultMetadata = {
   // Next.js Metadata API の title.template に使用
-  titleTemplate: "%s",
+  titleTemplate: "%s | Tokyo Decoded",
   defaultTitle: "Tokyo Decoded — 東京発バイリンガル編集部",
   defaultDescription:
     "東京発バイリンガル編集部。海外トレンドをデータで読み解き、日本のミレニアル世代に届けます。お金・暮らし・美容の最新情報を日本語と英語で発信。",
