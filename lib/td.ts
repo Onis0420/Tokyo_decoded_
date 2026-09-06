@@ -96,3 +96,24 @@ export function buildSearchIndex(locale: Locale): SearchItem[] {
     cc: catClass(p.category),
   }));
 }
+
+
+/** タグの出現回数上位（トップの「人気のトピック」用。以前はハードコード） */
+export function topTags(locale: Locale, n = 9): string[] {
+  const count = new Map<string, number>();
+  for (const p of posts) {
+    for (const t of (locale === "ja" ? p.tags_ja : p.tags_en)) count.set(t, (count.get(t) ?? 0) + 1);
+  }
+  return [...count.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], locale))
+    .slice(0, n)
+    .map(([t]) => t);
+}
+
+/** 読了時間：日本語 約500字/分、英語 約200語/分（最低1分） */
+export function readMinutes(post: Post, locale: Locale): number {
+  const parts = Object.values(post.body).map((b) => b[locale]);
+  const text = parts.join(" ");
+  const n = locale === "ja" ? text.length / 500 : text.split(/\s+/).length / 200;
+  return Math.max(1, Math.round(n));
+}

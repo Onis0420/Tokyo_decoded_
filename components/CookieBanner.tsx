@@ -5,25 +5,14 @@ import { usePathname } from "next/navigation";
 
 type CookieConsent = "accepted" | "rejected";
 
-const buttonClassName =
-  "rounded-none border border-paper px-5 py-3 text-sm font-medium transition-colors duration-[150ms] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-ink focus-visible:ring-accent motion-reduce:transition-none";
-
+// 2026-09-07: 画面下15%を占める全幅バナーから、右下の小さなカードに変更。
+// 「拒否」を選んだ場合は AnalyticsGate が GA を読み込まない（既に読み込み済みなら ga-disable で止める）。
 export default function CookieBanner() {
   const pathname = usePathname();
   const locale = pathname.startsWith("/en") ? "en" : "ja";
   const content = {
-    ja: {
-      label: "Cookieの使用に関する通知",
-      message: "当サイトはアクセス解析のため Cookie を使用します。",
-      accept: "同意する",
-      reject: "拒否する",
-    },
-    en: {
-      label: "Cookie notice",
-      message: "We use cookies for analytics.",
-      accept: "Accept",
-      reject: "Reject",
-    },
+    ja: { label: "Cookieの使用に関する通知", message: "アクセス解析のため Cookie を使用します。", accept: "同意", reject: "拒否", more: "詳細" },
+    en: { label: "Cookie notice", message: "We use cookies for analytics.", accept: "Accept", reject: "Reject", more: "Details" },
   }[locale];
 
   const consentIsMissing = useSyncExternalStore(
@@ -39,53 +28,37 @@ export default function CookieBanner() {
 
   const handleConsent = (consent: CookieConsent) => {
     window.localStorage.setItem("cookie-consent", consent);
+    const gaId = process.env.NEXT_PUBLIC_GA_ID;
+    if (consent === "rejected" && gaId) {
+      (window as unknown as Record<string, unknown>)[`ga-disable-${gaId}`] = true;
+    }
+    window.dispatchEvent(new Event("cookie-consent-change"));
     setIsDismissed(true);
   };
 
-  if (!isVisible) {
-    return null;
-  }
+  if (!isVisible) return null;
+
+  const btn = "rounded-none px-3 py-1.5 text-xs font-medium transition-colors duration-[150ms] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent motion-reduce:transition-none";
+  const font = locale === "ja" ? "font-jp" : "font-sans";
 
   return (
     <div
       role="dialog"
       aria-modal="false"
       aria-label={content.label}
-      className="fixed bottom-0 left-0 right-0 z-[600] bg-ink text-paper rounded-none"
+      className="fixed bottom-3 left-3 right-3 z-[600] sm:left-auto sm:right-5 sm:bottom-5 sm:max-w-[400px] bg-ink text-paper shadow-[0_8px_30px_rgba(0,0,0,.35)] rounded-none"
     >
-      <div className="mx-auto flex max-w-[1200px] flex-col gap-4 px-[5vw] py-5 sm:flex-row sm:items-center sm:justify-between lg:px-10">
-        <p
-          className={[
-            "text-sm text-paper",
-            locale === "ja" ? "font-jp" : "font-sans",
-          ].join(" ")}
-        >
-          {content.message}
+      <div className="flex items-center gap-3 px-4 py-3">
+        <p className={`${font} flex-1 text-xs leading-snug text-paper`}>
+          {content.message}{" "}
+          <a href={locale === "ja" ? "/privacy" : "/en/privacy"} className="underline underline-offset-2 text-paper/80 hover:text-paper">{content.more}</a>
         </p>
-        <div className="flex flex-wrap gap-3">
-          <button
-            type="button"
-            onClick={() => handleConsent("accepted")}
-            className={[
-              buttonClassName,
-              locale === "ja" ? "font-jp" : "font-sans",
-              "bg-paper text-ink hover:bg-cream",
-            ].join(" ")}
-          >
-            {content.accept}
-          </button>
-          <button
-            type="button"
-            onClick={() => handleConsent("rejected")}
-            className={[
-              buttonClassName,
-              locale === "ja" ? "font-jp" : "font-sans",
-              "bg-ink text-paper hover:text-cream",
-            ].join(" ")}
-          >
-            {content.reject}
-          </button>
-        </div>
+        <button type="button" onClick={() => handleConsent("rejected")} className={`${btn} ${font} border border-paper/40 text-paper hover:border-paper`}>
+          {content.reject}
+        </button>
+        <button type="button" onClick={() => handleConsent("accepted")} className={`${btn} ${font} bg-paper text-ink hover:bg-cream`}>
+          {content.accept}
+        </button>
       </div>
     </div>
   );

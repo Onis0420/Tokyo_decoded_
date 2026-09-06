@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { Inter, Noto_Sans_JP, Space_Grotesk } from "next/font/google";
 import CookieBanner from "@/components/CookieBanner";
 import FooterTD from "@/components/redesign/FooterTD";
-import GoogleAnalytics from "@/components/common/GoogleAnalytics";
+import AnalyticsGate from "@/components/common/AnalyticsGate";
 import HeaderTD from "@/components/redesign/HeaderTD";
 import { buildSearchIndex } from "@/lib/td";
 import SkipLink from "@/components/SkipLink";
@@ -100,7 +100,7 @@ export default function RootLayout({
         <FooterTD />
         <CookieBanner />
         <Suspense fallback={null}>
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID ?? ""} />
+          <AnalyticsGate gaId={process.env.NEXT_PUBLIC_GA_ID ?? ""} />
         </Suspense>
       </body>
     </html>

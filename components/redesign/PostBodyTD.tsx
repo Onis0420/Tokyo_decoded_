@@ -1,9 +1,14 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import type { Locale, Post } from "@/content/types";
 import CardTD from "@/components/redesign/CardTD";
-import { catClass, catLabel, title, excerpt, fmtDot } from "@/lib/td";
+import ShareRow from "@/components/redesign/ShareRow";
+import { catClass, catLabel, title, excerpt, fmtDot, readMinutes } from "@/lib/td";
 import { getAuthor } from "@/content/authors";
+import { getPrevNextPosts } from "@/lib/posts";
+import { splitParagraphs } from "@/lib/text";
+import { defaultMetadata } from "@/content/seo";
 
 const STEP_MARKER = /[①②③④⑤⑥⑦⑧⑨⑩]/;
 const INLINE_LINK = /\[([^\]]+)\]\((\/[^\s)]+|https:\/\/[^\s)]+)\)/g;
@@ -33,16 +38,24 @@ function renderInline(text: string): React.ReactNode {
   return nodes;
 }
 
-function SectionContent({ content }: { content: string }) {
-  const markerCount = (content.match(new RegExp(STEP_MARKER, "g")) ?? []).length;
-  if (markerCount < 2) return <p>{renderInline(content)}</p>;
-  const segments = content.split(new RegExp(`(?=${STEP_MARKER.source})`));
-  const intro = STEP_MARKER.test(segments[0]?.charAt(0) ?? "") ? null : segments.shift();
-  const items = segments.map((s) => s.replace(new RegExp(`^${STEP_MARKER.source}\\s*`), ""));
+/** 段落分割（改行・長文の自動分割）+ ①②③ の手順は番号付きリストに */
+function SectionContent({ content, locale }: { content: string; locale: Locale }) {
+  const paragraphs = splitParagraphs(content, locale);
   return (
     <>
-      {intro ? <p>{renderInline(intro.trim())}</p> : null}
-      <ol>{items.map((item, i) => <li key={i}>{renderInline(item.trim())}</li>)}</ol>
+      {paragraphs.map((para, pi) => {
+        const markerCount = (para.match(new RegExp(STEP_MARKER, "g")) ?? []).length;
+        if (markerCount < 2) return <p key={pi}>{renderInline(para)}</p>;
+        const segments = para.split(new RegExp(`(?=${STEP_MARKER.source})`));
+        const intro = STEP_MARKER.test(segments[0]?.charAt(0) ?? "") ? null : segments.shift();
+        const items = segments.map((s) => s.replace(new RegExp(`^${STEP_MARKER.source}\\s*`), ""));
+        return (
+          <React.Fragment key={pi}>
+            {intro ? <p>{renderInline(intro.trim())}</p> : null}
+            <ol>{items.map((item, i) => <li key={i}>{renderInline(item.trim())}</li>)}</ol>
+          </React.Fragment>
+        );
+      })}
     </>
   );
 }
@@ -59,14 +72,15 @@ export default function PostBodyTD({
   const toc = sections.filter((s) => s.h);
   const tags = locale === "ja" ? post.tags_ja : post.tags_en;
   const sources = post.sources ?? [];
+  const faq = post.faq ?? [];
+  const minutes = readMinutes(post, locale);
   const author = getAuthor(post.author);
   const authorName = author ? (locale === "ja" ? author.name_ja : author.name_en) : null;
   const authorRole = author ? (locale === "ja" ? author.role_ja : author.role_en) : null;
   const authorHref = author ? `${base}/authors/${author.slug}` : null;
-  const faq = post.faq ?? [];
-  // 読了時間：日本語は約500字/分、英語は約200語/分で概算（最低1分）
-  const bodyText = [post.body.hook, ...SECTIONS.map((k) => post.body[k])].map((b) => b[locale]).join(" ");
-  const readMinutes = Math.max(1, Math.round(locale === "ja" ? bodyText.length / 500 : bodyText.split(/\s+/).length / 200));
+  const { prev, next } = getPrevNextPosts(post.slug);
+  const pageUrl = `${defaultMetadata.siteUrl}${base}/posts/${post.slug}`;
+  const thumbAlt = locale === "ja" ? post.thumbnailAlt_ja : post.thumbnailAlt_en;
 
   const bodyImgAfter: Record<number, { src?: string; alt?: string }> = {
     1: { src: post.bodyImage1, alt: locale === "ja" ? post.bodyImage1Alt_ja : post.bodyImage1Alt_en },
@@ -93,7 +107,7 @@ export default function PostBodyTD({
           <div className="td-abyline">
             {author && authorHref ? (
               <Link href={authorHref} className="td-byauthor">
-                <img src={author.image} alt="" width={26} height={26} className="td-byavatar" />
+                <Image src={author.image} alt="" width={26} height={26} className="td-byavatar" />
                 <b>{locale === "ja" ? `文 — ${authorName}` : `By ${authorName}`}</b>
                 <span className="td-byrole">{authorRole}</span>
               </Link>
@@ -102,25 +116,28 @@ export default function PostBodyTD({
             )}
             <span className="td-dot">·</span>{fmtDot(post.publishedAt)} {locale === "ja" ? "公開" : "published"}
             <span className="td-dot">·</span>{fmtDot(post.updatedAt ?? post.publishedAt)} {locale === "ja" ? "更新" : "updated"}
-            <span className="td-dot">·</span>{locale === "ja" ? `読了 約${readMinutes}分` : `${readMinutes} min read`}
+            <span className="td-dot">·</span>{locale === "ja" ? `読了 約${minutes}分` : `${minutes} min read`}
             {sources.length > 0 ? (
               <><span className="td-dot">·</span><a href="#sources" className="td-srclink">{locale === "ja" ? `出典 ${sources.length}件` : `${sources.length} sources`}</a></>
             ) : null}
           </div>
         </div>
 
-        <div className="td-hero" style={{ backgroundImage: `url(${post.thumbnail})` }} />
+        <div className="td-hero">
+          <Image src={post.thumbnail} alt={thumbAlt} fill priority sizes="(max-width: 900px) 100vw, 1100px" />
+        </div>
 
         <div className="td-layout">
           <div className="td-article">
-            <div className="td-lead-p"><p>{renderInline(post.body.hook[locale])}</p></div>
+            <div className="td-lead-p"><SectionContent content={post.body.hook[locale]} locale={locale} /></div>
             {sections.map((s, i) => (
               <React.Fragment key={s.key}>
                 {s.h ? <h2 id={`s${i + 1}`}>{s.h}</h2> : null}
-                <SectionContent content={s.text} />
+                <SectionContent content={s.text} locale={locale} />
                 {bodyImgAfter[i]?.src ? (
                   <figure className="td-bodyfig">
-                    <img src={bodyImgAfter[i]!.src} alt={bodyImgAfter[i]!.alt ?? ""} />
+                    <Image src={bodyImgAfter[i]!.src!} alt={bodyImgAfter[i]!.alt ?? ""} width={1536} height={1024}
+                      sizes="(max-width: 900px) 100vw, 760px" style={{ width: "100%", height: "auto" }} />
                   </figure>
                 ) : null}
               </React.Fragment>
@@ -132,7 +149,7 @@ export default function PostBodyTD({
                 {faq.map((item, i) => (
                   <div className="td-faqitem" key={i}>
                     <h3>{item.q[locale]}</h3>
-                    <p>{renderInline(item.a[locale])}</p>
+                    <SectionContent content={item.a[locale]} locale={locale} />
                   </div>
                 ))}
               </section>
@@ -162,6 +179,8 @@ export default function PostBodyTD({
               </aside>
             ) : null}
 
+            <ShareRow url={pageUrl} title={title(post, locale)} locale={locale} />
+
             <div className="td-trust">
               <h3>{locale === "ja" ? "この記事について" : "About this article"}</h3>
               <p>
@@ -176,6 +195,22 @@ export default function PostBodyTD({
                 {locale === "ja" ? "をご覧ください。" : "."}
               </p>
             </div>
+
+            {author && authorHref ? (
+              <aside className="td-authorcard">
+                <Link href={authorHref} className="td-acavatar" aria-hidden="true" tabIndex={-1}>
+                  <Image src={author.image} alt="" width={72} height={72} />
+                </Link>
+                <div className="td-acbody">
+                  <div className="td-acrole">{authorRole}</div>
+                  <Link href={authorHref} className="td-acname">{authorName}</Link>
+                  <p>{locale === "ja" ? author.bio_ja : author.bio_en}</p>
+                  <Link href={authorHref} className="td-aclink">
+                    {locale === "ja" ? `${authorName}の記事をもっと読む →` : `More from ${authorName} →`}
+                  </Link>
+                </div>
+              </aside>
+            ) : null}
 
             {sources.length > 0 ? (
               <section className="td-sources" id="sources">
@@ -195,8 +230,27 @@ export default function PostBodyTD({
 
             {tags.length > 0 ? (
               <div className="td-dtags">
-                {tags.map((t) => <Link key={t} className="td-dtag" href={`${base}/posts`}>#{t}</Link>)}
+                {tags.map((t) => (
+                  <Link key={t} className="td-dtag" href={`${base}/posts?q=${encodeURIComponent(t)}`}>#{t}</Link>
+                ))}
               </div>
+            ) : null}
+
+            {(prev || next) ? (
+              <nav className="td-pn" aria-label={locale === "ja" ? "前後の記事" : "Previous and next articles"}>
+                {prev ? (
+                  <Link href={`${base}/posts/${prev.slug}`} className="td-pnprev">
+                    <span className="td-pnl">{locale === "ja" ? "← 前の記事" : "← Previous"}</span>
+                    <span className="td-pnt">{title(prev, locale)}</span>
+                  </Link>
+                ) : <span />}
+                {next ? (
+                  <Link href={`${base}/posts/${next.slug}`} className="td-pnnext">
+                    <span className="td-pnl">{locale === "ja" ? "次の記事 →" : "Next →"}</span>
+                    <span className="td-pnt">{title(next, locale)}</span>
+                  </Link>
+                ) : <span />}
+              </nav>
             ) : null}
           </div>
 
