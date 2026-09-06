@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { posts } from "@/content/posts";
+import type { Post } from "@/content/types";
 import { authors } from "@/content/authors";
 import { defaultMetadata, robotsPolicy } from "@/content/seo";
 
@@ -87,8 +88,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]);
 
   const authorPages: MetadataRoute.Sitemap = authors.flatMap((a) => {
-    const latest = posts
-      .filter((p) => (p as { author?: string }).author === a.slug)
+    const latest = (posts as readonly Post[])
+      .filter((p) => p.author === a.slug)
       .map((p) => new Date(p.updatedAt ?? p.publishedAt).getTime())
       .reduce((x, y) => Math.max(x, y), 0);
     const lastModified = latest ? new Date(latest) : new Date(STATIC_PAGE_LAST_MODIFIED["/about"]);
