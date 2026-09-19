@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
     ];
   },
   allowedDevOrigins: ["127.0.0.1"],
+  // 2026-09-20: ルートレイアウトを日英で分けたので、未マッチURLの404は app/global-not-found.tsx で描画する
+  experimental: { globalNotFound: true },
   outputFileTracingRoot: path.join(__dirname),
   images: {
     // 2026-09-07: WebP のみ（既定の AVIF はエンコードが重く、スクリーンショット系の取得経路で描画されない事例あり）

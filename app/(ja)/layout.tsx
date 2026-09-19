@@ -2,10 +2,10 @@ import RootShell, { rootMetadata } from "@/app/_shared/root-shell";
 
 export const metadata = rootMetadata;
 
-export default function EnRootLayout({
+export default function JaRootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <RootShell lang="en">{children}</RootShell>;
+  return <RootShell lang="ja">{children}</RootShell>;
 }

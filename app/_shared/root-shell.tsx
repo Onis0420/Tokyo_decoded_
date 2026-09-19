@@ -10,7 +10,12 @@ import SkipLink from "@/components/SkipLink";
 import JsonLdOrganization from "@/components/seo/JsonLdOrganization";
 import JsonLdWebSite from "@/components/seo/JsonLdWebSite";
 import { defaultMetadata, structuredDataTemplates } from "@/content/seo";
-import "./globals.css";
+import "@/app/globals.css";
+
+// 2026-09-20: ルートレイアウトを日英で分けた（app/(ja)/layout.tsx と app/en/layout.tsx）。
+// 以前は app/layout.tsx が <html lang="ja"> を固定していて、/en 配下の全ページが
+// 英語本文なのに lang="ja" を宣言していた（Bing・読み上げ・ブラウザの翻訳判定に影響）。
+// 見た目とメタデータは両言語で共通なので、外枠はここに1つだけ置く。
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -33,7 +38,7 @@ const notoSansJP = Noto_Sans_JP({
   display: "swap",
 });
 
-export const metadata: Metadata = {
+export const rootMetadata: Metadata = {
   metadataBase: new URL(defaultMetadata.siteUrl),
   title: {
     default: defaultMetadata.defaultTitle,
@@ -75,13 +80,15 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true, "max-image-preview": "large" },
 };
 
-export default function RootLayout({
+export default function RootShell({
+  lang,
   children,
 }: Readonly<{
+  lang: "ja" | "en";
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" data-scroll-behavior="smooth">
+    <html lang={lang} data-scroll-behavior="smooth">
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} ${notoSansJP.variable}`}
         suppressHydrationWarning

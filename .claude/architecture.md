@@ -5,6 +5,13 @@
 > 対象フェーズ：Phase 1 DESIGN
 > 参照元：brief.md, AGENTS.md, package.json, app/layout.tsx
 
+> **2026-09-20 構成変更（この文書の `app/...` のパスは変更前のもの）**
+> ルートレイアウトを日英で分けた。`app/layout.tsx` は廃止し、外枠は `app/_shared/root-shell.tsx`（`RootShell` と `rootMetadata`）。
+> 日本語ページは `app/(ja)/` 配下（URL は変わらない）で `app/(ja)/layout.tsx` が `<html lang="ja">`、
+> 英語ページは `app/en/layout.tsx` が `<html lang="en">`。未マッチURLの404は `app/global-not-found.tsx`
+> （`next.config.ts` の `experimental.globalNotFound`）。理由：/en 配下が英語本文なのに `lang="ja"` を宣言していたため。
+> 注意：ルートレイアウトと同じ階層のページ（`app/en/page.tsx`）には `title.template` が掛からないので、absolute で固定している。
+
 ---
 
 ## 1. プロジェクト構造
