@@ -123,7 +123,7 @@ export const posts = [
     sources: [{"label_ja": "リゼクリニック「2026年度｜10～50代男女1000名へ聞く！性別・世代別に『肌悩み』を調査分析」（PR TIMES・2026年2月）", "label_en": "Rize Clinic, 2026 survey of 1,000 men and women aged 10s–50s on skin concerns (PR TIMES, Feb 2026, Japanese)", "url": "https://prtimes.jp/main/html/rd/p/000000117.000020081.html", "publisher": "リゼクリニック"}],
     author: "jiwoo-seo",
     relatedToolSlug: "",
-    affiliateLinks: [],
+    affiliateLinks: [{"label": "キュレル 潤浸保湿 フェイスクリーム（楽天）", "label_en": "Curél Intensive Moisture Care Face Cream (Rakuten)", "url": "https://hb.afl.rakuten.co.jp/hgc/g00qvyfn.kll758cb.g00qvyfn.kll76afe/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsundrug%2F4901301236210%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsundrug%2Fi%2F10025267%2F&rafcid=wsc_i_is_c18bf7b5-1871-492a-a3f5-afa07ce3dd0a"}, {"label": "オルビス 薬用クリアフルシリーズ（オルビス公式）", "label_en": "Orbis Medicated Clearful series (Orbis official)", "url": "https://px.a8.net/svt/ejp?a8mat=4B5OO1+9QOC36+1USQ+BXYEA"}, {"label": "サンホワイト P-1（白色ワセリン）（楽天）", "label_en": "Sun White P-1 White Petrolatum (Rakuten)", "url": "https://hb.afl.rakuten.co.jp/hgc/g00r294n.kll756bb.g00r294n.kll768d1/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbio-fujisawa%2F10012-2%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbio-fujisawa%2Fi%2F10001302%2F&rafcid=wsc_i_is_c18bf7b5-1871-492a-a3f5-afa07ce3dd0a"}],
     tags_ja: ["毛穴ケア", "スキンバリア", "スラッギング", "保湿", "海外スキンケア"],
     tags_en: ["pore care", "skin barrier", "slugging", "moisturizing", "k-beauty"],
   },
