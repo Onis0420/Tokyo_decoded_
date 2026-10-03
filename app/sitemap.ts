@@ -72,16 +72,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]);
 
-  const postPages: MetadataRoute.Sitemap = posts.flatMap((post) => [
+  // 記事の lastmod はリライト日（updatedAt）を優先する。
+  // 2026-10-03 まで publishedAt 固定だったため、9/27 の FAQ 追加（041〜043）が
+  // サイトマップ上は「公開日のまま」で、Google に更新が伝わっていなかった（10/3 定例）。
+  const postPages: MetadataRoute.Sitemap = (posts as readonly Post[]).flatMap((post) => [
     {
       url: `${base}/posts/${post.slug}`,
-      lastModified: new Date(post.publishedAt),
+      lastModified: new Date(post.updatedAt ?? post.publishedAt),
       changeFrequency: "monthly",
       priority: robotsPolicy.sitemapPriorities["/posts/[slug]"],
     },
     {
       url: `${base}/en/posts/${post.slug}`,
-      lastModified: new Date(post.publishedAt),
+      lastModified: new Date(post.updatedAt ?? post.publishedAt),
       changeFrequency: "monthly",
       priority: robotsPolicy.sitemapPriorities["/posts/[slug]"],
     },
